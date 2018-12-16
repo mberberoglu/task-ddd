@@ -2737,16 +2737,16 @@
         },
         {
             "name": "league/tactician-bundle",
-            "version": "v1.1.5",
+            "version": "v1.1.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/tactician-bundle.git",
-                "reference": "bf10a37e27e4306bb9de5d909dba36226aa8e3c4"
+                "reference": "3644020c3600113c9bd459b8c1efff9cb2e42d0d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/tactician-bundle/zipball/bf10a37e27e4306bb9de5d909dba36226aa8e3c4",
-                "reference": "bf10a37e27e4306bb9de5d909dba36226aa8e3c4",
+                "url": "https://api.github.com/repos/thephpleague/tactician-bundle/zipball/3644020c3600113c9bd459b8c1efff9cb2e42d0d",
+                "reference": "3644020c3600113c9bd459b8c1efff9cb2e42d0d",
                 "shasum": ""
             },
             "require": {
@@ -2816,7 +2816,7 @@
                 "symfony",
                 "tactician"
             ],
-            "time": "2018-04-25T07:12:11+00:00"
+            "time": "2018-12-16T12:51:57+00:00"
         },
         {
             "name": "league/tactician-container",
