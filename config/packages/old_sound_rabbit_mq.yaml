@@ -1,0 +1,36 @@
+parameters:
+    env(RABBITMQ_URL): ''
+
+old_sound_rabbit_mq:
+    connections:
+        default:
+            url: '%env(RABBITMQ_URL)%'
+            lazy: true
+            connection_timeout: 3
+            read_write_timeout: 3
+
+            keepalive: false
+
+            heartbeat: 0
+
+    producers:
+        events:
+            connection:       default
+            exchange_options: { name: 'events', type: topic }
+
+
+    multiple_consumers:
+        events:
+            connection:       default
+            exchange_options: { name: 'events', type: topic }
+            queues:
+                user:
+                    name:     user
+                    callback: App\Infrastructure\Common\Event\AsyncEventConsumer
+                    routing_keys:
+                        - 'UserWasCreated'
+                transactions:
+                    name:     transactions
+                    callback: App\Infrastructure\Common\Event\AsyncEventConsumer
+                    routing_keys:
+                        - 'TransactionWasCreated'

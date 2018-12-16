@@ -1,0 +1,19 @@
+App\Domain\Warehouse\Model\Shipment:
+    exclusion_policy: ALL
+    properties:
+        uuid:
+            type: string
+        shipmentNumber:
+            accessor:
+                getter: globalShipmentNumber
+        status:
+            expose: true
+        createdAt:
+            type: DateTime<'Y-m-d\TH:i:sO'>
+            expose: true
+        updatedAt:
+            type: DateTime<'Y-m-d\TH:i:sO'>
+            expose: true
+        deliveredAt:
+            type: DateTime<'Y-m-d\TH:i:sO'>
+            expose: true

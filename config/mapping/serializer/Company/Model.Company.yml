@@ -1,0 +1,7 @@
+App\Domain\Company\Model\Company:
+    exclusion_policy: ALL
+    properties:
+        uuid:
+            type: string
+        name:
+            expose: true

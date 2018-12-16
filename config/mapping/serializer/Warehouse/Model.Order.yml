@@ -1,0 +1,26 @@
+App\Domain\Warehouse\Model\Order:
+    exclusion_policy: ALL
+    properties:
+        uuid:
+            type: string
+        orderNumber:
+            accessor:
+                getter: globalOrderNumber
+        shipment:
+            expose: true
+        company:
+            expose: true
+        user:
+            expose: true
+        address:
+            expose: true
+        state:
+            expose: true
+        items:
+            expose: true
+        createdAt:
+            type: DateTime<'Y-m-d\TH:i:sO'>
+            expose: true
+        updatedAt:
+            type: DateTime<'Y-m-d\TH:i:sO'>
+            expose: true

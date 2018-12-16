@@ -1,0 +1,9 @@
+App\Domain\Warehouse\Model\OrderItem:
+    exclusion_policy: ALL
+    properties:
+        uuid:
+            type: string
+        product:
+            expose: true
+        quantity:
+            expose: true

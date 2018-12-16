@@ -1,0 +1,47 @@
+# To get started with security, check out the documentation:
+# http://symfony.com/doc/current/book/security.html
+security:
+    encoders:
+        harsh:
+            algorithm: bcrypt
+            cost: 12
+
+    providers:
+        users:
+            id: App\Infrastructure\Security\Security\UserProvider\UserProvider
+
+    firewalls:
+        # disables authentication for assets and the profiler, adapt it according to your needs
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+            stateless:  true
+
+        doc_area:
+            pattern:    ^/api-doc
+            stateless: true
+            anonymous: true
+
+        api_auth:
+            pattern:  ^/auth
+            stateless: true
+            anonymous: true
+
+        secured_area:
+            pattern:    ^/
+            stateless: true
+            provider: users
+            guard:
+                authenticators:
+                    - lexik_jwt_authentication.jwt_token_authenticator
+        public:
+            pattern:  ^/
+            stateless: true
+            anonymous: true
+
+    access_control:
+
+        - { path: ^/,     roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/doc,     roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/auth,   roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/,  roles: IS_AUTHENTICATED_FULLY       }

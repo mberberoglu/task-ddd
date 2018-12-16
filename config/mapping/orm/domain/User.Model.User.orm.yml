@@ -1,0 +1,41 @@
+App\Domain\User\Model\User:
+    type: entity
+    table: user
+    repositoryClass: App\Infrastructure\User\Repository\UserRepository
+    id:
+        uuid:
+            type: userId
+            nullable: false
+    indexes:
+        email_index:
+            columns: [ email ]
+
+    uniqueConstraints:
+        search_idx:
+            columns: [ auth_username ]
+
+    fields:
+        email:
+            type: string
+            unique: true
+            length: 32
+            nullable: false
+
+        createdAt:
+            type: datetime
+
+        updatedAt:
+            type: datetime
+            nullable: true
+
+    embedded:
+        auth:
+            class: App\Domain\Security\ValueObject\AuthUser
+
+    oneToOne:
+        company:
+            targetEntity: App\Domain\Company\Model\Company
+            joinColumn:
+                name: fk_company
+                referencedColumnName: uuid
+    lifecycleCallbacks: {  }

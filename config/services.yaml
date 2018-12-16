@@ -1,0 +1,67 @@
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+        bind:
+            $queryBus: '@tactician.commandbus.query'
+#            $commandBus: '@tactician.commandbus.command'
+
+    _instanceof:
+
+        App\Application\Command\CommandHandlerInterface:
+            public: true
+            tags:
+                - { name: tactician.handler, typehints: true, bus: command }
+#
+        App\Application\Query\QueryHandlerInterface:
+            public: true
+            tags:
+                - { name: tactician.handler, typehints: true, bus: query }
+
+        Broadway\EventHandling\EventListener:
+            public: true
+            tags:
+                - { name: broadway.domain.event_listener }
+
+    App\:
+        resource: '../src/*'
+        exclude: '../src/**/{Migrations,EventSubscriber}'
+
+    App\Domain\Common\Event\EventCollector:
+        factory: ["App\\Domain\\Common\\Event\\EventCollector", "instance"]
+        public: true
+
+    App\Domain\Common\Event\EventDispatcherInterface:
+        class: App\Infrastructure\Common\Event\EventDispatcher
+        autowire: true
+        public: true
+
+    App\Infrastructure\Common\Bus\Middleware\EventPublisherMiddleware:
+        public: true
+        arguments:
+            - '@old_sound_rabbit_mq.events_producer'
+            - App\Domain\Common\Event\EventCollector
+            - '@jms_serializer.serializer'
+
+    ### UI
+
+    App\UI\Cli\Command\:
+        resource: '../src/UI/Cli/Command'
+
+    App\UI\Http\Controller\:
+        resource: '../src/UI/Http/Controller/*'
+        tags: [ 'controller.service_arguments' ]
+
+    ### UI Listeners
+
+    App\UI\Http\EventSubscriber\JsonBodyParserSubscriber:
+        tags:
+            - { name: 'kernel.event_listener', event: 'kernel.request', method: 'onKernelRequest', priority: 100 }

@@ -1,0 +1,45 @@
+fos_rest:
+    versioning:
+        enabled: true
+        resolvers:
+            query:
+                parameter_name: version
+            media_type:
+                enabled: true
+                regex: '/(v|version)=(?P<version>[0-9\.]+)/'
+
+    serializer:
+        version: "v1"
+        serialize_null: true
+
+    routing_loader:
+        default_format: json
+
+    view:
+        view_response_listener: 'force'
+        formats:
+            json: true
+
+        mime_types:
+            json: ['application/json', 'application/json;version=2.0']
+
+    format_listener:
+        rules:
+            - { path: '^/', priorities: ['json'], fallback_format: json, prefer_extension: true }
+
+    param_fetcher_listener: force
+
+    exception:
+        enabled: true
+        codes:
+            'InvalidArgumentException': 400
+            'Doctrine\ORM\OptimisticLockException': 409
+            'Doctrine\DBAL\Exception\UniqueConstraintViolationException': 409
+
+            'App\Domain\Common\Exception\NotFoundException': 404
+            'App\Domain\Security\Exception\AuthenticationException': 401
+
+        messages:
+            'InvalidArgumentException': true
+            'App\Domain\Common\Exception\NotFoundException': true
+            'App\Domain\Security\Exception\AuthenticationException': true

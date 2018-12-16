@@ -1,0 +1,27 @@
+App\Domain\Warehouse\Model\Product:
+    type: entity
+    table: product
+    repositoryClass: App\Infrastructure\Warehouse\Repository\ProductRepository
+    id:
+        uuid:
+            type: productId
+            nullable: false
+
+    fields:
+        name:
+            type: string
+        quantity:
+            type: smallint
+
+    manyToOne:
+        company:
+            targetEntity: App\Domain\Company\Model\Company
+            joinColumn:
+                name: fk_company
+                referencedColumnName: uuid
+                nullable: false
+                onDelete: CASCADE
+            cascade:
+                - all
+
+    lifecycleCallbacks: {  }

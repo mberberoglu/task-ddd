@@ -1,0 +1,39 @@
+App\Domain\Company\Model\Company:
+    type: entity
+    table: company
+    repositoryClass: App\Infrastructure\Company\Repository\CompanyRepository
+    id:
+        uuid:
+            type: companyId
+            nullable: false
+
+    uniqueConstraints:
+        search_idx:
+            columns: [ prefix ]
+
+    fields:
+        name:
+            type: string
+        type:
+            type: string
+            length: 10
+        prefix:
+            type: string
+            unique: true
+            length: 3
+
+        createdAt:
+            type: datetime
+
+        updatedAt:
+            type: datetime
+
+    oneToOne:
+        user:
+            targetEntity: App\Domain\User\Model\User
+            joinColumn:
+                name: fk_user
+                referencedColumnName: uuid
+                nullable: false
+
+    lifecycleCallbacks: {  }

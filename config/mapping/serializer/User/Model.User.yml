@@ -1,0 +1,7 @@
+App\Domain\User\Model\User:
+    exclusion_policy: ALL
+    properties:
+        uuid:
+            type: string
+        email:
+            expose: true

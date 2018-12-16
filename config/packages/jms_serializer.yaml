@@ -1,0 +1,18 @@
+jms_serializer:
+    property_naming:
+        id: 'jms_serializer.identical_property_naming_strategy'
+    visitors:
+        xml_serialization:
+            format_output: '%kernel.debug%'
+    metadata:
+        auto_detection: true
+        directories:
+            Warehouse:
+                namespace_prefix: "App\\Domain\\Warehouse"
+                path: "%kernel.root_dir%/../config/mapping/serializer/Warehouse"
+            User:
+                namespace_prefix: "App\\Domain\\User"
+                path: "%kernel.root_dir%/../config/mapping/serializer/User"
+            Company:
+                namespace_prefix: "App\\Domain\\Company"
+                path: "%kernel.root_dir%/../config/mapping/serializer/Company"

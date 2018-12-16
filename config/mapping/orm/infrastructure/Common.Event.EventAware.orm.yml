@@ -1,0 +1,25 @@
+App\Infrastructure\Common\Event\EventAware:
+    type: entity
+    table: events
+    repositoryClass: App\Infrastructure\Common\Repository\EventStoreRepository
+    id:
+      uuid:
+        type: eventAwareId
+        nullable: false
+    indexes:
+      type_index:
+        columns: [ type ]
+
+    fields:
+      type:
+        type: string
+        length: 255
+        nullable: false
+
+      event:
+        type: event
+
+      createdAt:
+        type: datetime
+
+    lifecycleCallbacks: {  }

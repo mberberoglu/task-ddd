@@ -1,0 +1,10 @@
+App\Domain\Warehouse\Model\Product:
+    exclusion_policy: ALL
+    properties:
+        uuid:
+            type: string
+            expose: true
+        name:
+            expose: true
+        quantity:
+            expose: true

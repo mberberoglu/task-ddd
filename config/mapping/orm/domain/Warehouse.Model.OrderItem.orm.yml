@@ -1,0 +1,25 @@
+App\Domain\Warehouse\Model\OrderItem:
+    type: entity
+    table: product_order_item
+    id:
+        uuid:
+            type: orderItemId
+            nullable: false
+
+        quantity:
+            type: smallint
+    manyToOne:
+        order:
+            targetEntity: App\Domain\Warehouse\Model\Order
+            joinColumn:
+                name: fk_order
+                referencedColumnName: uuid
+                nullable: false
+        product:
+            targetEntity: App\Domain\Warehouse\Model\Product
+            joinColumn:
+                name: fk_product
+                referencedColumnName: uuid
+                nullable: false
+
+    lifecycleCallbacks: {  }

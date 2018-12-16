@@ -1,0 +1,59 @@
+App\Domain\Warehouse\Model\Shipment:
+    type: entity
+    table: shipment
+    repositoryClass: App\Infrastructure\Warehouse\Repository\ShipmentRepository
+    id:
+        uuid:
+            type: orderId
+            nullable: false
+
+    fields:
+        shipmentNumber:
+            type: string
+            unique: true
+        state:
+            type: string
+        type:
+            type: string
+        createdAt:
+            type: datetime
+        updatedAt:
+            type: datetime
+        deliveredAt:
+            type: datetime
+            nullable: true
+
+    oneToOne:
+        parent:
+            targetEntity: App\Domain\Warehouse\Model\Shipment
+            joinColumn:
+                name: fk_parent
+                referencedColumnName: uuid
+                nullable: true
+    manyToOne:
+        order:
+            targetEntity: App\Domain\Warehouse\Model\Order
+            joinColumn:
+                name: fk_order
+                referencedColumnName: uuid
+                nullable: false
+        company:
+            targetEntity: App\Domain\Company\Model\Company
+            joinColumn:
+                name: fk_company
+                referencedColumnName: uuid
+                nullable: false
+                onDelete: CASCADE
+            cascade:
+                - all
+        user:
+            targetEntity: App\Domain\User\Model\User
+            joinColumn:
+                name: fk_user
+                referencedColumnName: uuid
+                nullable: false
+                onDelete: CASCADE
+            cascade:
+                - all
+
+    lifecycleCallbacks: {  }

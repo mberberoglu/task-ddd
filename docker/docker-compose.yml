@@ -1,0 +1,40 @@
+version: '2'
+services:
+    mysql:
+        image: mysql:5.7
+        ports:
+            - '13306:3306'
+        environment:
+            MYSQL_ROOT_PASSWORD: 22XkIOZjyW
+    php:
+        image: mustafab/php-7.2-fpm
+        container_name: php
+        depends_on:
+            - mysql
+        ports:
+            - '19000:9000'
+        environment:
+            - DATABASE_URL=mysql://root:22XkIOZjyW@mysql:3306/app
+        volumes:
+            - ../:/var/www/app:cached
+            - ./logs/app:/var/www/app/var/logs:cached
+    nginx:
+        build: nginx
+        ports:
+            - '8080:80'
+        links:
+            - php
+        volumes_from:
+            - php
+        volumes:
+            - ./logs/nginx/:/var/log/nginx:cached
+    rmq:
+        image: rabbitmq:3-management
+        environment:
+            RABBITMQ_ERLANG_COOKIE: "SWQOKODSQALRPCLNMEQG"
+            RABBITMQ_DEFAULT_USER: "guest"
+            RABBITMQ_DEFAULT_PASS: "guest"
+            RABBITMQ_DEFAULT_VHOST: "/"
+        ports:
+            - "15673:15672"
+            - "5673:5672"
