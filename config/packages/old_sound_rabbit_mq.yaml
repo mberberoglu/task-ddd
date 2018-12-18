@@ -29,8 +29,24 @@ old_sound_rabbit_mq:
                     callback: App\Infrastructure\Common\Event\AsyncEventConsumer
                     routing_keys:
                         - 'UserWasCreated'
-                transactions:
-                    name:     transactions
+                        - 'CompanyAssignedToUser'
+                company:
+                    name:     company
+                    callback: App\Infrastructure\Common\Event\AsyncEventConsumer
+                    routing_keys:
+                        - 'CompanyWasCreated'
+                warehouse:
+                    name:     warehouse
                     callback: App\Infrastructure\Common\Event\AsyncEventConsumer
                     routing_keys:
                         - 'TransactionWasCreated'
+                        - 'OrderAddressWasUpdated'
+                        - 'OrderItemWasCreated'
+                        - 'OrderItemWasUpdated'
+                        - 'OrderWasCancelled'
+                        - 'OrderWasCreated'
+                        - 'ProductInventoryChanged'
+                        - 'ProductWasCreated'
+                        - 'ShipmentWasCreated'
+                        - 'ShipmentWasDelivered'
+                        - 'ShipmentWasStarted'
